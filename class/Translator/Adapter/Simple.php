@@ -17,7 +17,7 @@ class Simple {
     /**
      * @var \Translator\String\Decorator
      */
-    private $testDecorator;
+    private $decorator;
 
     public function __construct($translationMode = \Translator\Application::TRANSLATE_OFF,
                                 $pageId,
@@ -29,7 +29,7 @@ class Simple {
         $this->pageId = $pageId;
         $this->language = $language;
         $this->driver = $driver;
-        $this->testDecorator = $testDecorator;
+        $this->decorator = $testDecorator;
         $this->translations = $this->driver->readTranslations($pageId, $language);
     }
 
@@ -48,7 +48,11 @@ class Simple {
 //--------------------------------------------------------------------------------------------------
 
     private function decorator() {
-        return $this->testDecorator ?: new \Translator\String\Decorator();
+        return $this->decorator ?: ($this->decorator = new \Translator\String\Decorator());
     }
 
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
 }

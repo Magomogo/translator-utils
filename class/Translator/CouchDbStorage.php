@@ -62,7 +62,8 @@ class CouchDbStorage {
 
     private function createDatabaseIfNeeded($language) {
         if (!$this->db->hasDatabase($language)) {
-            $this->db->createDatabase($language)->insert(self::dbSchema());
+            $schema = self::dbSchema();
+            $this->db->createDatabase($language)->insert($schema);
         }
     }
 
