@@ -2,7 +2,7 @@
     "name": "Magomogo/translator-utils",
     "description": "Utils for localization with Translator application",
     "require": {
-        "mockery/mockery": "0.7.2",
+        "mockery/mockery": ">=0.7.2",
         "EHER/PHPUnit": "1.6",
         "bachi/couchdb": "*"
     },
