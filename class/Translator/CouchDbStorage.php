@@ -2,34 +2,41 @@
 
 namespace Translator;
 
-use \CouchDB\Http\ClientInterface;
-
 class CouchDbStorage
 {
     private $db;
+    private $prefix;
 
-    public function __construct(\CouchDB\Connection $dbConnection)
+    public function __construct(\CouchDB\Connection $dbConnection, $prefix = '')
     {
         $this->db = $dbConnection;
+        $this->prefix = $prefix;
     }
 
     public function registerTranslation($key, $pageId, $language)
     {
         $this->createDatabaseIfNeeded($language);
+        $register = false;
 
         try {
-            $doc = $this->db->selectDatabase($language)->find(md5($key));
+            $doc = $this->db->selectDatabase($this->prefix . $language)->find(md5($key));
         } catch (\RuntimeException $e) {
             $doc = self::newDoc($key);
+            $register = true;
         }
         if (!array_key_exists($pageId, $doc['pageTranslations'])) {
             $doc['pageTranslations'][$pageId] = null;
+            $register = true;
+        }
+
+        if (!$register) {
+            return;
         }
 
         if (isset($doc['_rev'])) {
-            $this->db->selectDatabase($language)->update($doc['_id'], $doc);
+            $this->db->selectDatabase($this->prefix . $language)->update($doc['_id'], $doc);
         } else {
-            $this->db->selectDatabase($language)->insert($doc);
+            $this->db->selectDatabase($this->prefix . $language)->insert($doc);
         }
     }
 
@@ -38,7 +45,7 @@ class CouchDbStorage
         $translations = array();
 
         if ($this->db->hasDatabase($language)) {
-            $view = $this->db->selectDatabase($language)
+            $view = $this->db->selectDatabase($this->prefix . $language)
                 ->find('_design/main/_view/by_page_id?key="' . urlencode($pageId) . '"');
 
             foreach ($view['rows'] as $record) {
@@ -60,9 +67,9 @@ class CouchDbStorage
 
     private function createDatabaseIfNeeded($language)
     {
-        if (!$this->db->hasDatabase($language)) {
+        if (!$this->db->hasDatabase($this->prefix . $language)) {
             $schema = self::dbSchema();
-            $this->db->createDatabase($language)->insert($schema);
+            $this->db->createDatabase($this->prefix . $language)->insert($schema);
         }
     }
 

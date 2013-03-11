@@ -6,11 +6,23 @@
         "EHER/PHPUnit": "1.6",
         "bachi/couchdb": "*"
     },
+    "suggest": {
+        "silex/silex": "1.0.*",
+        "symfony/translation": "2.1.*"
+    },
     "minimum-stability": "dev",
     "authors": [
         {
             "name": "Maxim Gnatenko",
             "email": "maxim@xiag.ch"
+        },
+        {
+            "name": "Vladimir Goldobin",
+            "email": "vgold@xiag.ch"
+        },
+        {
+            "name": "Anton Bondar",
+            "email": "zebooka@xiag.ch"
         }
     ],
     "autoload": {

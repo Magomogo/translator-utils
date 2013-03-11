@@ -4,7 +4,6 @@ namespace Translator\Adapter;
 
 class Simple
 {
-
     private $translationMode;
     private $pageId;
     private $language;
@@ -32,7 +31,9 @@ class Simple
         $translation = array_key_exists($string, $this->translations) ?
             $this->translations[$string] : $string;
 
-        if ($this->translationMode == \Translator\Application::TRANSLATE_ON) {
+        if ($this->translationMode == \Translator\Application::TRANSLATE_AUTO_REGISTER) {
+            $this->driver->registerTranslation($string, $this->pageId, $this->language);
+        } elseif ($this->translationMode == \Translator\Application::TRANSLATE_ON) {
             $this->driver->registerTranslation($string, $this->pageId, $this->language);
             return $this->decorator()->decorate($string, $translation);
         }
