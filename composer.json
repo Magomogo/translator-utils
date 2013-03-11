@@ -1,5 +1,5 @@
 {
-    "name": "Magomogo/translator-utils",
+    "name": "xiag/translator-utils",
     "description": "Utils for localization with Translator application",
     "require": {
         "mockery/mockery": ">=0.7.2",
