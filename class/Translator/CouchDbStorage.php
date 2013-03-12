@@ -1,45 +1,52 @@
 <?php
+
 namespace Translator;
 
-use \CouchDB\Http\ClientInterface;
-
-class CouchDbStorage {
-
-    /**
-     * @var \CouchDB\Connection
-     */
+class CouchDbStorage
+{
     private $db;
+    private $prefix;
 
-    public function __construct($dbConnection) {
+    public function __construct(\CouchDB\Connection $dbConnection, $prefix = '')
+    {
         $this->db = $dbConnection;
+        $this->prefix = $prefix;
     }
 
-    public function registerTranslation($key, $pageId, $language) {
+    public function registerTranslation($key, $pageId, $language)
+    {
         $this->createDatabaseIfNeeded($language);
+        $register = false;
 
         try {
-            $doc = $this->db->selectDatabase($language)->find(md5($key));
+            $doc = $this->db->selectDatabase($this->prefix . $language)->find(md5($key));
         } catch (\RuntimeException $e) {
             $doc = self::newDoc($key);
+            $register = true;
         }
         if (!array_key_exists($pageId, $doc['pageTranslations'])) {
             $doc['pageTranslations'][$pageId] = null;
+            $register = true;
+        }
+
+        if (!$register) {
+            return;
         }
 
         if (isset($doc['_rev'])) {
-            $this->db->selectDatabase($language)->update($doc['_id'], $doc);
-        }
-        else {
-            $this->db->selectDatabase($language)->insert($doc);
+            $this->db->selectDatabase($this->prefix . $language)->update($doc['_id'], $doc);
+        } else {
+            $this->db->selectDatabase($this->prefix . $language)->insert($doc);
         }
     }
 
-    public function readTranslations($pageId, $language) {
+    public function readTranslations($pageId, $language)
+    {
         $translations = array();
 
         if ($this->db->hasDatabase($language)) {
-            $view = $this->db->selectDatabase($language)
-                        ->find('_design/main/_view/by_page_id?key="' . $pageId . '"');
+            $view = $this->db->selectDatabase($this->prefix . $language)
+                ->find('_design/main/_view/by_page_id?key="' . urlencode($pageId) . '"');
 
             foreach ($view['rows'] as $record) {
                 $doc = $record['value'];
@@ -58,15 +65,16 @@ class CouchDbStorage {
         return $translations;
     }
 
-//--------------------------------------------------------------------------------------------------
-
-    private function createDatabaseIfNeeded($language) {
-        if (!$this->db->hasDatabase($language)) {
-            $this->db->createDatabase($language)->insert(self::dbSchema());
+    private function createDatabaseIfNeeded($language)
+    {
+        if (!$this->db->hasDatabase($this->prefix . $language)) {
+            $schema = self::dbSchema();
+            $this->db->createDatabase($this->prefix . $language)->insert($schema);
         }
     }
 
-    private static function dbSchema() {
+    private static function dbSchema()
+    {
         return array(
             '_id' => '_design/main',
             'language' => 'javascript',
@@ -82,7 +90,8 @@ class CouchDbStorage {
         );
     }
 
-    private static function newDoc($key) {
+    private static function newDoc($key)
+    {
         return array(
             '_id' => md5($key),
             'key' => $key,
@@ -91,7 +100,8 @@ class CouchDbStorage {
         );
     }
 
-    private static function mapDocumentsByPageId() {
+    private static function mapDocumentsByPageId()
+    {
         return <<<'JS'
 function (doc) {
     var pageId;
@@ -106,7 +116,8 @@ function (doc) {
 JS;
     }
 
-    private static function mapPageIds() {
+    private static function mapPageIds()
+    {
         return <<<'JS'
 function (doc) {
     var pageId;
@@ -119,6 +130,5 @@ function (doc) {
     }
 }
 JS;
-
     }
 }
