@@ -2,15 +2,18 @@
 
 namespace Translator\SourceCode;
 
+use PHPUnit\Framework\TestCase;
 use Translator\SourceCode\TranslateIterator\AngularView;
 use Translator\MultiString;
 use org\bovigo\vfs\vfsStream;
 use Mockery as m;
-use Translator\Storage\StorageInterface;
+use Hamcrest\Matchers as h;
 
-class CrawlerTest extends \PHPUnit_Framework_TestCase
+class CrawlerTest extends TestCase
 {
-    protected function setUp()
+    use m\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
+    protected function setUp(): void
     {
         vfsStream::setup('templates', null, array(
             'order.html' => "<h1> {{ 'title' | i18n}} </h1>",
@@ -33,13 +36,13 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $storage
             ->shouldReceive('ensurePresence')
             ->with(
-                equalTo(MultiString::create('title', 'The title', null, 'vfs://templates/order.html'))
+                h::equalTo(MultiString::create('title', 'The title', null, 'vfs://templates/order.html'))
             )->once();
 
         $storage
             ->shouldReceive('ensurePresence')
             ->with(
-                equalTo(
+                h::equalTo(
                     MultiString::create(
                         'order/details:title',
                         'Here are the order details',
@@ -52,7 +55,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $storage
             ->shouldReceive('ensurePresence')
             ->with(
-                equalTo(
+                h::equalTo(
                     MultiString::create(
                         'agb',
                         'Terms and conditions',
@@ -72,7 +75,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $storage
             ->shouldReceive('ensurePresence')
             ->with(
-                equalTo(
+                h::equalTo(
                     MultiString::create(
                         'order/details:title',
                         'Title',
@@ -114,7 +117,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
         $storage
             ->shouldReceive('ensurePresence')
             ->with(
-                equalTo(
+                h::equalTo(
                     MultiString::create(
                         'order/details:title',
                         'Here are the order details',
@@ -135,7 +138,7 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
     public function testCrawlerRespectsDatabaseContents()
     {
         $storage = m::mock();
-        $storage->shouldReceive('ensurePresence')->with(anything())->atLeast(4);
+        $storage->shouldReceive('ensurePresence')->with(m::any())->atLeast(4);
 
         self::crawler($storage)->collectTranslations(array(vfsStream::url('templates')), '.html');
     }
@@ -144,11 +147,11 @@ class CrawlerTest extends \PHPUnit_Framework_TestCase
 
     private static function crawler($storage, $translations = null, $context = null)
     {
-        if (is_null($translations)) {
+        if ($translations === null) {
             $translations = self::translations();
         }
 
-        if (is_null($context)) {
+        if ($context === null) {
             $context = array();
         }
 

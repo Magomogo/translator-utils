@@ -1,16 +1,21 @@
 <?php
 namespace Translator;
 
-class IframeTest extends \PHPUnit_Framework_TestCase
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
+
+class IframeTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     public function testRepresentsItselfAsAString()
     {
-        $this->assertContains('<iframe', strval(self::iframe()));
+        $this->assertStringContainsString('<iframe', strval(self::iframe()));
     }
 
     public function testLoadsTranslatorApplicationInsideIframe()
     {
-        $this->assertContains('src="/translator"', strval(self::iframe('/translator')));
+        $this->assertStringContainsString('src="/translator"', strval(self::iframe('/translator')));
     }
 
 //--------------------------------------------------------------------------------------------------

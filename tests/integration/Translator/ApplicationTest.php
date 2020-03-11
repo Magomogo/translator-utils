@@ -18,7 +18,7 @@ class ApplicationIntegrationTest extends CouchDbTestCase
 
     public function testInjectsAnIframeAtClientSide()
     {
-        $this->assertContains('<iframe ', self::app()->injectAtClientSide('ru_RU'));
+        $this->assertStringContainsString('<iframe ', self::app()->injectAtClientSide('ru_RU'));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

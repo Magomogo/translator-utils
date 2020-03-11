@@ -4,12 +4,13 @@ namespace Translator\Test;
 
 use Doctrine\CouchDB\CouchDBClient;
 use Doctrine\CouchDB\HTTP\SocketClient as HttpClient;
+use PHPUnit\Framework\TestCase;
 use Translator\Storage\CouchDb;
 use Translator\MultiString;
 
-abstract class CouchDbTestCase extends \PHPUnit_Framework_TestCase
+abstract class CouchDbTestCase extends TestCase
 {
-    protected function setup()
+    protected function setup(): void
     {
         exec(
             dirname(dirname(dirname(__DIR__))) .
@@ -17,7 +18,7 @@ abstract class CouchDbTestCase extends \PHPUnit_Framework_TestCase
         );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         self::db()->deleteDatabase(TEST_COUCHDB_NAME);
     }

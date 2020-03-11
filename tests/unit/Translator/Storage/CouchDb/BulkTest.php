@@ -5,10 +5,14 @@ namespace Translator\Storage\CouchDb;
 use Doctrine\CouchDB\CouchDBClient;
 use Doctrine\CouchDB\HTTP\Response;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Translator\MultiString;
+use Hamcrest\Matchers as h;
 
-class BulkTest extends \PHPUnit_Framework_TestCase
+class BulkTest extends TestCase
 {
+    use m\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     public function testDoesntDoSingleRequestToCouchDb()
     {
         $connection = m::mock('Doctrine\\CouchDB\\HTTP\\Client');
@@ -21,7 +25,7 @@ class BulkTest extends \PHPUnit_Framework_TestCase
     {
         $connection = m::mock('Doctrine\\CouchDB\\HTTP\\Client');
         $connection->shouldReceive('request')
-            ->with('POST', matchesPattern('@^/fake_db_name/_design/main/_view/find\?@'), m::any())
+            ->with('POST', h::matchesPattern('@^/fake_db_name/_design/main/_view/find\?@'), m::any())
             ->andReturn(new Response(200, array(), array('rows' => array()), true));
 
         $connection->shouldReceive('request')->with('POST', '/fake_db_name/_bulk_docs', m::on(function ($arg) {
@@ -56,7 +60,7 @@ class BulkTest extends \PHPUnit_Framework_TestCase
     {
         $connection = m::mock('Doctrine\\CouchDB\\HTTP\\Client');
         $connection->shouldReceive('request')
-            ->with('POST', matchesPattern('@^/fake_db_name/_design/main/_view/find\?@'), m::any())
+            ->with('POST', h::matchesPattern('@^/fake_db_name/_design/main/_view/find\?@'), m::any())
             ->andReturn(new Response(200, array(), array('rows' => array(
                     array(
                         'value' => array(
@@ -103,7 +107,7 @@ class BulkTest extends \PHPUnit_Framework_TestCase
     {
         $connection = m::mock('Doctrine\\CouchDB\\HTTP\\Client');
         $connection->shouldReceive('request')
-            ->with('POST', matchesPattern('@^/fake_db_name/_design/main/_view/find\?@'), m::any())
+            ->with('POST', h::matchesPattern('@^/fake_db_name/_design/main/_view/find\?@'), m::any())
             ->andReturn(new Response(200, array(), array('rows' => array()), true));
 
         $connection->shouldReceive('request')->with('POST', '/fake_db_name/_bulk_docs', m::any(), m::any(), m::any())->twice();

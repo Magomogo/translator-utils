@@ -3,18 +3,22 @@
 namespace Translator\Import;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Translator\MultiString;
+use Hamcrest\Matchers as h;
 
-class ProcessTest extends \PHPUnit_Framework_TestCase
+class ProcessTest extends TestCase
 {
+    use m\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     public function testIteratesOverAllStringsRegisteringThem()
     {
         $storage = m::mock();
         $storage->shouldReceive('setTranslationValue')
-            ->with(equalTo(MultiString::create('yes', 'Yes')))
+            ->with(h::equalTo(MultiString::create('yes', 'Yes')))
             ->once();
         $storage->shouldReceive('setTranslationValue')
-            ->with(equalTo(MultiString::create('validator:notEmpty', 'Should be not empty', 'Validation error messages')))
+            ->with(h::equalTo(MultiString::create('validator:notEmpty', 'Should be not empty', 'Validation error messages')))
             ->once();
 
         $process = new Process($storage);

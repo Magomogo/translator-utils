@@ -3,8 +3,9 @@
 namespace Translator\Import\Source;
 
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 
-class PortableObjectTest extends \PHPUnit_Framework_TestCase
+class PortableObjectTest extends TestCase
 {
     public function testIteratesOverTranslations()
     {

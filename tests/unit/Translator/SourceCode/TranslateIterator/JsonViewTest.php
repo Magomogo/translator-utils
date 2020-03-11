@@ -2,7 +2,9 @@
 
 namespace Translator\SourceCode\TranslateIterator;
 
-class JsonViewTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class JsonViewTest extends TestCase
 {
     public function testCanIterateOverEachTranslationKeys()
     {

@@ -1,6 +1,8 @@
 <?php
 
-class EnvironmentTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class EnvironmentTest extends TestCase
 {
 
     public function testCouchDbIsUp()

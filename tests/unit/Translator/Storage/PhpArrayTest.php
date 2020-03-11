@@ -2,9 +2,10 @@
 
 namespace Translator\Storage;
 
+use PHPUnit\Framework\TestCase;
 use Translator\MultiString;
 
-class PhpArrayTest extends \PHPUnit_Framework_TestCase
+class PhpArrayTest extends TestCase
 {
 
     public function testFetchesTranslationsForANamespace()

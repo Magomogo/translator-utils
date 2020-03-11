@@ -2,7 +2,9 @@
 
 namespace Translator\SourceCode\TranslateIterator;
 
-class PhpViewTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class PhpViewTest extends TestCase
 {
     public function testCanIterateOverEachTranslationKeys()
     {

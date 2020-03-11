@@ -2,7 +2,9 @@
 
 namespace Translator\SourceCode;
 
-class MustacheViewClauseTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class MustacheViewClauseTest extends TestCase
 {
     /**
      * @dataProvider testCases
