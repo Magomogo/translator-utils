@@ -10,7 +10,7 @@
         "doctrine/couchdb": "@dev",
         "mockery/mockery": "~0.9.0",
         "phpunit/phpunit": "3.7.*",
-        "mikey179/vfsStream": "1.1.*",
+        "mikey179/vfsstream": "^1.0",
         "eloquent/composer-npm-bridge": "^3.0"
     },
     "suggest": {
