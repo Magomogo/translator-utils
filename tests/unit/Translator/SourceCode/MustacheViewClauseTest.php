@@ -65,6 +65,11 @@ class MustacheViewClauseTest extends \PHPUnit\Framework\TestCase
                 ['NAME_PREFIX' => 'Mr', 'LAST_NAME' => 'Doe'],
                 'email/orderConfirmation:dearMrLastName NAME_PREFIX="Mr" LAST_NAME="Doe"'
             ],
+            [
+                'emails/passwordRecovery:body',
+                ['recoveryLink' => 'foo/bar?l=de'],
+                'emails/passwordRecovery:body recoveryLink="foo/bar?l=de"'
+            ],
         ];
     }
 }

@@ -22,7 +22,7 @@ class MustacheViewClause
     public function parameters()
     {
         $parts = preg_split(
-            '/\\s*([_\.a-zA-Z0-9]+)\\s*=\\s*/',
+            '/\\s*([_\.a-zA-Z0-9]+)\\s*=\\s*"/',
             $this->paramPart,
             -1,
             PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
@@ -32,7 +32,7 @@ class MustacheViewClause
         while(count($parts)) {
             $name = array_shift($parts);
             $value = array_shift($parts);
-            $nameToValueMap[$name] = substr($value, 1, -1);
+            $nameToValueMap[$name] = substr($value, 0, -1);
         }
 
         return $nameToValueMap;
