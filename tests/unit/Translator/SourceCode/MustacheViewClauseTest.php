@@ -19,52 +19,52 @@ class MustacheViewClauseTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expectedParams, $clause->parameters());
     }
 
-    public static function testCases()
+    public static function testCases(): array
     {
-        return array(
-            array('', array(), ''),
-            array('page', array(), 'page'),
-            array('meta/index:keywords', array(), 'meta/index:keywords'),
-            array(
+        return [
+            ['', [], ''],
+            ['page', [], 'page'],
+            ['meta/index:keywords', [], 'meta/index:keywords'],
+            [
                 'meta/city:keywords',
-                array('city' => 'Lugano', 'region' => 'Ticino'),
+                ['city' => 'Lugano', 'region' => 'Ticino'],
                 'meta/city:keywords city="Lugano" region="Ticino"'
-            ),
-            array(
+            ],
+            [
                 'xHotelsFound',
-                array('NUM' => '9'),
+                ['NUM' => '9'],
                 'xHotelsFound NUM = "9"'
-            ),
-            array(
+            ],
+            [
                 'helloPerson',
-                array('NAME' => 'John Doe'),
+                ['NAME' => 'John Doe'],
                 'helloPerson NAME = "John Doe"'
-            ),
-            array(
+            ],
+            [
                 'helloPerson',
-                array('person.name' => 'John Doe'),
+                ['person.name' => 'John Doe'],
                 'helloPerson person.name = "John Doe"'
-            ),
-            array(
+            ],
+            [
                 'names:caffee',
-                array('TITLE' => 'Legendary "Titanic"'),
+                ['TITLE' => 'Legendary "Titanic"'],
                 'names:caffee TITLE = "Legendary "Titanic""'
-            ),
-            array(
+            ],
+            [
                 'greetVisitor',
-                array('NAME' => ''),
+                ['NAME' => ''],
                 'greetVisitor NAME=""'
-            ),
-            array(
+            ],
+            [
                 'greetVisitor',
-                array('NAME' => '', 'TITLE' => 'Mr.'),
+                ['NAME' => '', 'TITLE' => 'Mr.'],
                 'greetVisitor NAME ="" TITLE = "Mr."'
-            ),
-            array(
+            ],
+            [
                 'email/orderConfirmation:dearMrLastName',
-                array('NAME_PREFIX' => 'Mr', 'LAST_NAME' => 'Doe'),
+                ['NAME_PREFIX' => 'Mr', 'LAST_NAME' => 'Doe'],
                 'email/orderConfirmation:dearMrLastName NAME_PREFIX="Mr" LAST_NAME="Doe"'
-            ),
-        );
+            ],
+        ];
     }
 }
