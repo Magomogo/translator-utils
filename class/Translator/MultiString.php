@@ -145,10 +145,10 @@ class MultiString
             substr($keyWithNamespace, strrpos($keyWithNamespace, ':') + 1) : $keyWithNamespace;
     }
 
-    private static function namespacePart($keyWithNamespace)
+    private static function namespacePart($keyWithNamespace): string
     {
         return strrpos($keyWithNamespace, ':') !== false ?
-            substr($keyWithNamespace, 0, strrpos($keyWithNamespace, ':')) : null;
+            substr($keyWithNamespace, 0, strrpos($keyWithNamespace, ':')) : '';
     }
 
     /**

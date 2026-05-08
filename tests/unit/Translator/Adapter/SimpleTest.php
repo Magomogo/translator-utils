@@ -4,8 +4,10 @@ namespace Translator\Adapter;
 use Mockery as m;
 use Translator\Application;
 
-class SimpleTest extends \PHPUnit_Framework_TestCase
+class SimpleTest extends \PHPUnit\Framework\TestCase
 {
+    use m\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     public function testReadsTranslationFromArray()
     {
         $this->assertEquals('привет', self::adapter(null, array('hello' => 'привет'))->translate('hello'));

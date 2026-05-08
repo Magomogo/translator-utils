@@ -7,11 +7,8 @@
          stopOnFailure="true"
          stopOnIncomplete="false"
          stopOnSkipped="false"
+         beStrictAboutTestsThatDoNotTestAnything="false"
  >
-
-    <listeners>
-        <listener class="Mockery\Adapter\Phpunit\TestListener"/>
-    </listeners>
 
     <php>
         <const name="TESTS_IN_PROGRESS" value="1"/>

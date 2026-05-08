@@ -5,8 +5,10 @@ namespace Translator\Adapter;
 use Mockery as m;
 use Translator\Application;
 
-class ICUTest extends \PHPUnit_Framework_TestCase
+class ICUTest extends \PHPUnit\Framework\TestCase
 {
+    use m\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     /**
      * @dataProvider messageParametersProvider
      */

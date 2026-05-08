@@ -2,7 +2,7 @@
 
 namespace Translator\SourceCode\TranslateIterator;
 
-class AngularViewTest extends \PHPUnit_Framework_TestCase
+class AngularViewTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanIterateOverEachTranslationKeys()
     {

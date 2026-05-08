@@ -2,7 +2,7 @@
 
 namespace Translator\SourceCode\TranslateIterator;
 
-class MustacheViewTest extends \PHPUnit_Framework_TestCase
+class MustacheViewTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanIterateOverEachTranslationKeyIgnoringTranslationKeysToBeCompiled()
     {

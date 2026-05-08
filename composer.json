@@ -3,15 +3,15 @@
     "license": "MIT",
     "description": "PHP Utils for localization with Magomogo/Translator application",
     "require": {
-        "php": ">=5.3.0",
+        "php": "^8.0",
         "ext-intl": "*"
     },
     "require-dev": {
         "doctrine/couchdb": "@dev",
-        "mockery/mockery": "~0.9.0",
-        "phpunit/phpunit": "3.7.*",
         "mikey179/vfsstream": "^1.0",
-        "eloquent/composer-npm-bridge": "^3.0"
+        "phpunit/phpunit": "^9.6",
+        "mockery/mockery": "^1.6",
+        "eloquent/composer-npm-bridge": "^5.0"
     },
     "suggest": {
         "doctrine/couchdb": "Required when CouchDb translations storage is used"
@@ -33,6 +33,14 @@
     "autoload": {
         "psr-0": {
             "Translator": "class/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.0.0"
+        },
+        "allow-plugins": {
+            "eloquent/composer-npm-bridge": true
         }
     }
 }

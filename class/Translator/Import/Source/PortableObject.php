@@ -2,11 +2,13 @@
 
 namespace Translator\Import\Source;
 
+use Traversable;
+
 class PortableObject implements SourceInterface
 {
     private $translations = array();
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new \ArrayIterator($this->translations);
     }
@@ -44,10 +46,10 @@ class PortableObject implements SourceInterface
 
     private static function interpret($buffer)
     {
-        list($buffer, $msgid) = self::readId($buffer);
-        list($buffer, $msgstr) = self::readStr($buffer);
-        list($buffer, $msgctxt) = self::readContext($buffer);
-        list($buffer, $comment) = self::readComment($buffer);
+        [$buffer, $msgid] = self::readId($buffer);
+        [$buffer, $msgstr] = self::readStr($buffer);
+        [$buffer, $msgctxt] = self::readContext($buffer);
+        [$buffer, $comment] = self::readComment($buffer);
         $info = array($msgstr);
         if (!is_null($comment)) {
             $info[] = $comment;

@@ -7,17 +7,21 @@ use Doctrine\CouchDB\HTTP\SocketClient as HttpClient;
 use Translator\Storage\CouchDb;
 use Translator\MultiString;
 
-abstract class CouchDbTestCase extends \PHPUnit_Framework_TestCase
+abstract class CouchDbTestCase extends \PHPUnit\Framework\TestCase
 {
-    protected function setup()
+    protected function setup(): void
     {
+        if (getenv('COUCH_DB_ADDRESS') === false) {
+            $this->markTestSkipped('skip CouchDb test');
+        }
+
         exec(
             dirname(dirname(dirname(__DIR__))) .
             '/node_modules/.bin/translator-couch ' . TEST_COUCHDB_PREFIX . ' ' . TEST_COUCHDB_LOCALE
         );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         self::db()->deleteDatabase(TEST_COUCHDB_NAME);
     }

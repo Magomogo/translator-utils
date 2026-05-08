@@ -2,10 +2,13 @@
 
 namespace Translator\Import\Source;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use org\bovigo\vfs\vfsStream;
 
-class PortableObjectTest extends \PHPUnit_Framework_TestCase
+class PortableObjectTest extends \PHPUnit\Framework\TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     public function testIteratesOverTranslations()
     {
         $translations = self::iterate(<<<'PO'

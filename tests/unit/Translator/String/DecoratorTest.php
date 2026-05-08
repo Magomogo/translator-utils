@@ -1,7 +1,7 @@
 <?php
 namespace Translator\String;
 
-class String_DecoratorTest extends \PHPUnit_Framework_TestCase
+class String_DecoratorTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testDecoratesTranslatableString()

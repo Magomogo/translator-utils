@@ -1,11 +1,14 @@
 <?php
 namespace Translator\Storage;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Translator\Test\CouchDbTestCase;
 use Translator\MultiString;
 
 class CouchDbIntegrationTest extends CouchDbTestCase
 {
+    use MockeryPHPUnitIntegration;
+
     public function testFetchesTranslationsForANamespace()
     {
         self::fillInStorage();

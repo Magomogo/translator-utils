@@ -2,7 +2,7 @@
 
 namespace Translator;
 
-class MultiStringTest extends \PHPUnit_Framework_TestCase
+class MultiStringTest extends \PHPUnit\Framework\TestCase
 {
     public function testCanBeCreatedWithFactoryMethod()
     {

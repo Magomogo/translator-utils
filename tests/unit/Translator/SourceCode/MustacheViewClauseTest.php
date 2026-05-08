@@ -2,8 +2,12 @@
 
 namespace Translator\SourceCode;
 
-class MustacheViewClauseTest extends \PHPUnit_Framework_TestCase
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
+class MustacheViewClauseTest extends \PHPUnit\Framework\TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /**
      * @dataProvider testCases
      */

@@ -2,10 +2,12 @@
 
 namespace Translator\Storage;
 
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Translator\MultiString;
 
-class PhpArrayTest extends \PHPUnit_Framework_TestCase
+class PhpArrayTest extends \PHPUnit\Framework\TestCase
 {
+    use MockeryPHPUnitIntegration;
 
     public function testFetchesTranslationsForANamespace()
     {
